@@ -10,5 +10,12 @@ For this project the standard Ubuntu image for Vagrant ubuntu/trusty64 was used.
 When starting this project, you end up with three machines, the clients being able to reach each other through the router. This base can be extended to test things like setting up a web server on a client, then enabling iptables on the router and testing reachability to the server from the other client. That's just one example of the endless possibilities.
 
 **OpenBSD**  
+The project folder 3-nodes-openbsd contains a Vagrant file that can be used to deploy three VM's in the following topology:  
+client1 <-> fw <-> client2  
+  
+For this project the "generic/openbsd6" box was used, which is readily avaible from the Vagrant Cloud library. This box was chosen as it has timely updates and support for both VirtualBox and libvirt. 
+
+
+
 box gepakt en aangepast als volgt:
 
