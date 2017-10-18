@@ -1,0 +1,51 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    
+  config.vm.define "client1" do |client1|
+    #configure VM
+    client1.vm.box = "obsd"
+    client1.vm.hostname = "client1"
+    
+    #configure networking
+    client1.vm.network "private_network", ip: "192.168.100.100"
+    client1.vm.synced_folder ".", "/vagrant", disabled: true
+    client1.vm.provision "shell", inline: "route del default"
+    client1.vm.provision "shell", inline: "route add default 192.168.100.1"
+    
+    client1.vm.provision "shell", inline: "echo client1 finished!!!"
+  end
+  
+  config.vm.define "fw" do |fw|
+    #configure VM
+    fw.vm.box = "obsd"
+    fw.vm.hostname = "fw"
+
+    #configure networking
+    fw.vm.network "private_network", ip: "192.168.100.1"
+    fw.vm.network "private_network", ip: "192.168.200.1"
+    fw.vm.network "public_network", ip: "10.14.10.200"
+    fw.vm.provision "shell", inline: "route del default"
+    fw.vm.provision "shell", inline: "route add default 10.14.10.1"
+    fw.vm.provision "shell", inline: "doas sysctl net.inet.ip.forwarding=1"
+    fw.vm.synced_folder ".", "/vagrant", disabled: true
+    
+    fw.vm.provision "shell", inline: "echo fw finished!!!"
+  end
+  
+  config.vm.define "client2" do |client2|
+    #configure VM
+    client2.vm.box = "obsd"
+    client2.vm.hostname = "client2"
+
+    #configure networking
+    client2.vm.network "private_network", ip: "192.168.200.100"
+    client2.vm.synced_folder ".", "/vagrant", disabled: true
+    client2.vm.provision "shell", inline: "route del default"
+    client2.vm.provision "shell", inline: "route add default 192.168.200.1"
+    
+    client2.vm.provision "shell", inline: "echo client2 finished!!!"
+  end
+        
+end
