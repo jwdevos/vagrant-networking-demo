@@ -1,10 +1,10 @@
 # vagrant-networking-demo
 Simple Vagrant networking demo with Ubuntu and OpenBSD
 
-**Ubuntu**
+**Ubuntu**  
 bla
 
 
-**OpenBSD**
+**OpenBSD**  
 box gepakt en aangepast als volgt:
 
