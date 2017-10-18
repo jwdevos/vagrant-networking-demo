@@ -16,24 +16,24 @@ client1 <-> fw <-> client2
 For this project the "generic/openbsd6" box was used, which is readily avaible from the Vagrant Cloud library. This box was chosen as it has timely updates and support for both VirtualBox and libvirt. 
   
 When I first tried to use this box I ran into a problem. Vagrant sends SSH commands to the machines as part of the setup procedure. There was a permissions problem which I tracked down to broken sudo/doas configuration in the Vagrant box. To fix it, I first changed the following settings and then used Vagrant to export the machine to become a new box, with the settings fixed.  
-'''
+```
 echo "#includedir /etc/sudoers.d/" > /etc/sudoers
 touch /etc/doas.conf
 echo "permit :wheel" >> /etc/doas.conf
 echo "permit nopass keepenv root" >> /etc/doas.conf
 echo "permit nopass keepenv vagrant" >> /etc/doas.conf
-'''  
+```  
   
 After fixing the settings, you just run the following commands from the same folder:  
-'''
+```
 vagrant package --output obsd.box
 vagrant box add obsd obsd.box
-'''  
+```  
   
 This gives you a new usable OpenBSD box in Vagrant, which you can use like this:  
-'''  
+```  
 config.vm.box = "obsd"
-'''  
+```  
   
 Like with the Ubuntu demo, there's some magic to hijack the default route where it's necessary, because of the required Vagrant NAT interface. Also, IPv4 forwarding is enabled on the firewall. The Vagrant synced folders don't work well with BSD distro's so that stuff gets disabled explicitly to avoid further hassles.  
   
