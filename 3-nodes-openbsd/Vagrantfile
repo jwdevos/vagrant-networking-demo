@@ -25,9 +25,9 @@ Vagrant.configure("2") do |config|
     #configure networking
     fw.vm.network "private_network", ip: "192.168.100.254"
     fw.vm.network "private_network", ip: "192.168.200.254"
-    fw.vm.network "public_network", ip: "10.14.10.200"
+    fw.vm.network "public_network", ip: "10.0.0.100"
     fw.vm.provision "shell", inline: "route del default"
-    fw.vm.provision "shell", inline: "route add default 10.14.10.1"
+    fw.vm.provision "shell", inline: "route add default 10.0.0.1"
     fw.vm.provision "shell", inline: "doas sysctl net.inet.ip.forwarding=1"
     fw.vm.synced_folder ".", "/vagrant", disabled: true
     
